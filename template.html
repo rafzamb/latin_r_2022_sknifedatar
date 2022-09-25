@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Sknifedatar</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Rafael Zambrano &amp; Karina Bartolomé" />
+    <script src="template_files/header-attrs-2.14/header-attrs.js"></script>
+    <script src="template_files/xaringanExtra-progressBar-0.0.1/progress-bar.js"></script>
+    <link rel="stylesheet" href="CopyOflatinR.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+class: center
+
+&lt;img src="images/gif_serie.gif" width="35%" /&gt;
+# Sknifedatar
+
+
+**Un paquete para el modelado y visualización de múltiples series de tiempo**
+
+
+&lt;img src="images/logo_latinr.png" width="15%" height="15%" style="display: block; margin: auto;" /&gt;
+
+&lt;br&gt;
+
+Rafael Zambrano &amp; Karina Bartolomé
+
+Octubre del 2022
+
+
+---
+
+&lt;style type="text/css"&gt;
+/* Table width = 100% max-width */
+.remark-slide table{width: 100%;}
+/* Change the background color to white for shaded rows (even rows) */
+.remark-slide thead, .remark-slide tr:nth-child(2n) {
+  background-color: white;
+  .tfoot .td {background-color: white}
+}
+.bold-last-item &gt; ul &gt; li:last-of-type,
+.bold-last-item &gt; ol &gt; li:last-of-type {font-weight: bold;}
+&lt;/style&gt;
+
+
+
+
+# ¿Quiénes somos?
+
+.pull-left[
+### Rafael Zambrano
+- **Actuary / Data Scientist**
+]
+.pull-right[
+&lt;br&gt;
+&lt;br&gt;
+&lt;img src="images/imagen_b.jpeg" width="35%" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-left[
+### Karina Bartolomé
+- **Economist / Data Scientist**
+]
+.pull-right[
+&lt;br&gt;
+&lt;br&gt;
+&lt;img src="images/imagen_a.jpeg" width="35%" style="display: block; margin: auto;" /&gt;
+]
+---
+
+## Ecosistema {tidymodels-modeltime}
+
+{modeltime} fue desarrollado por **Matt Dancho** para realizar análisis de series de tiempo mediante un enfoque ordenado (o Tidy) con {tidymodels} 📦. 
+
+&lt;img src="images/modeltime.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# {sknifedatar} 📦
+
+#### Una extensión de **{modeltime}**
+
+
+```r
+install.packages('sknifedatar')
+```
+
+
+&lt;img src="images/sknifedatar.png" width="35%" height="35%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# {sknifedatar} 📦
+
+### Funcionalidades
+
+- **Funciones multifit**: Múltiples modelos en múltiples series de tiempo (sin datos de panel)
+- **Workflowsets**: Ajuste de múltiples modelos y recetas de preprocesamiento con modeltime
+- **Workflowset multifit**: Ajuste de múltiples modelos y recetas de preprocesamiento sobre múltiples modelos (sin datos de panel)
+- **Automagic tabs**: Generación automática de tabs
+---
+
+# Objetivo de la Charla
+
+---
+
+# Agenda
+
+### Indice
+### Indice
+### Indice
+### Indice
+### Indice
+
+---
+
+# Caso de Uso
+
+
+---
+
+# Datos
+
+
+---
+
+# Evolución de las series
+
+
+---
+
+# Modelado
+
+### Indice
+### Indice
+### Indice
+### Indice
+### Indice
+
+---
+class: chapter-slide
+
+# Múltiples modelos sobre una serie
+
+---
+
+# Múltiples modelos sobre una serie
+
+### Seleccion de datos
+
+---
+
+# Múltiples modelos sobre una serie
+
+### Partición de datos
+
+---
+
+# Múltiples modelos sobre una serie
+
+### Preprocesamiento / Recetas
+
+---
+
+# Múltiples modelos sobre una serie
+
+### Modelos
+
+---
+
+# Múltiples modelos sobre una serie
+
+### Modeltime Table
+
+---
+
+# Múltiples modelos sobre una serie
+
+### Métricas en Test (Tabla)
+
+---
+
+# Múltiples modelos sobre una serie
+
+### Métricas en Test (Gráficos)
+
+---
+
+# Múltiples modelos sobre una serie
+
+### Refit y pronostico (proximo mes)
+
+---
+class: chapter-slide
+
+# Múltiples modelos sobre múltiples series
+
+---
+
+# Múltiples modelos sobre múltiples series
+
+### Selección de datos
+
+---
+
+# Múltiples modelos sobre múltiples series
+
+### Selección de datos
+
+---
+
+# Múltiples modelos sobre múltiples series
+
+### Modeltime Table Multifit
+
+---
+
+# Múltiples modelos sobre múltiples series
+
+### Modeltime Tbale Multifit
+
+---
+
+# Múltiples modelos sobre múltiples series
+
+### Métricas en Test (Tabla)
+
+---
+
+# Múltiples modelos sobre múltiples series
+
+### Métricas en Test (Gráficos)
+
+---
+
+# Múltiples modelos sobre múltiples series
+
+### Selección del mejor modelo para cada serie
+
+---
+
+# Múltiples modelos sobre múltiples series
+
+### Refit y pronostico (próximos 6 meses)
+
+---
+class: chapter-slide
+
+# {Worflowsets} sobre múltiples series 
+
+---
+
+# {Worflowsets} sobre múltiples series 
+
+LOGO
+
+---
+
+# {Worflowsets} sobre múltiples series 
+
+Foto del esquema
+
+---
+
+# {Worflowsets} sobre múltiples series 
+
+### Recetas
+
+---
+
+# {Worflowsets} sobre múltiples series 
+
+### Modelos
+
+---
+
+# {Worflowsets} sobre múltiples series 
+
+### Worflowsets Object
+
+---
+
+# {Worflowsets} sobre múltiples series 
+
+### Worflowsets Object
+
+---
+
+# {Worflowsets} sobre múltiples series 
+
+### Ajuste de modelos
+
+---
+
+# {Worflowsets} sobre múltiples series 
+
+### Métricas en Test (Tabla)
+
+---
+
+# {Worflowsets} sobre múltiples series 
+
+### Métricas en Test (Gráficos)
+
+---
+
+# {Worflowsets} sobre múltiples series 
+
+### Selección de la mejor combinación de modelos y recetas por serie
+
+### Reentrenamiento
+
+---
+
+# {Worflowsets} sobre múltiples series 
+
+### Pronostico (Próximos 6 meses)
+
+---
+
+class: chapter-slide
+
+# Automagic tabs
+
+---
+# ¿Por qué utilizar tabs? 🤔
+
+Mostrar muchos gráficos  📈 o resultados de modelos 🤖 juntos puede generar confusión. Organizar los resultados en solapas permite centrar la atención en ciertos aspectos y no sobrecargar de información. 
+
+.panelset[
+.panel[.panel-name[👋 Hey!]
+Esta es la primera tab
+
+🌟 Hacer click en las tabs para consejos no solicitados 🌟 👆
+
+]
+
+.panel[.panel-name[Consejo 1]
+&lt;img src="https://media.tenor.com/images/be8a87467b75e9deaa6cfe8ad0b739a0/tenor.gif" width="50%" style="display: block; margin: auto;" /&gt;
+]
+
+.panel[.panel-name[Consejo 2]
+&lt;img src="https://media.tenor.com/images/6a2cca305dfacae61c5668dd1687ad55/tenor.gif" width="50%" style="display: block; margin: auto;" /&gt;
+]
+
+.panel[.panel-name[Consejo 3]
+&lt;img src="https://media.tenor.com/images/bfde5ad652b71fc9ded82c6ed760355b/tenor.gif" width="50%" style="display: block; margin: auto;" /&gt;
+]
+]
+---
+## ¿Cómo se crean tabs manualmente?
+
+&lt;img src="https://karbartolome-blog.netlify.app/posts/automagictabs/data/tabs.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Generación automática de tabs 🙌
+
+👉 **Código inline** , utilizando un dataframe anidado, que incluye una variable del resultado a presentar por tab ('.plot'), y una variable agrupadora ('Species')
+
+
+---
+
+## Contactos ✉
+
+Karina Bartolome [![Twitter Badge](https://img.shields.io/badge/-@karbartolome-1ca0f1?style=flat&amp;labelColor=1ca0f1&amp;logo=twitter&amp;logoColor=white&amp;link=https://twitter.com/karbartolome)](https://twitter.com/karbartolome) [![Linkedin Badge](https://img.shields.io/badge/-karina bartolome-blue?style=flat&amp;logo=Linkedin&amp;logoColor=white&amp;link=https://www.linkedin.com/in/karinabartolome/)](https://www.linkedin.com/in/karinabartolome/) [![Github Badge](https://img.shields.io/badge/-karbartolome-black?style=flat&amp;logo=Github&amp;logoColor=white&amp;link=https://github.com/karbartolome)](https://github.com/karbartolome) [![Website Badge](https://img.shields.io/badge/-Personal%20blog-47CCCC?style=flat&amp;logo=Google-Chrome&amp;logoColor=white&amp;link=https://karbartolome-blog.netlify.app/)](https://karbartolome-blog.netlify.app/)
+
+
+
+Rafael Zambrano [![Twitter Badge](https://img.shields.io/badge/-@rafa_zamr-1ca0f1?style=flat&amp;labelColor=1ca0f1&amp;logo=twitter&amp;logoColor=white&amp;link=https://twitter.com/rafa_zamr)](https://twitter.com/rafa_zamr) [![Linkedin Badge](https://img.shields.io/badge/-rafael zambrano-blue?style=flat&amp;logo=Linkedin&amp;logoColor=white&amp;link=https://www.linkedin.com/in/rafael-zambrano/)](https://www.linkedin.com/in/rafael-zambrano/) [![Github Badge](https://img.shields.io/badge/-rafzamb-black?style=flat&amp;logo=Github&amp;logoColor=white&amp;link=https://github.com/rafzamb)](https://github.com/rafzamb) [![Website Badge](https://img.shields.io/badge/-Personal%20blog-47CCCC?style=flat&amp;logo=Google-Chrome&amp;logoColor=white&amp;link=https://rafael-zambrano-blog-ds.netlify.app/)](https://rafael-zambrano-blog-ds.netlify.app/)
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"navigation": {
+"scroll": false
+}
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
