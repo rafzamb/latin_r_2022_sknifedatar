@@ -178,7 +178,8 @@ Se utilizan datos de [Competencia de Kaggle: M5 Forecasting 2020](https://www.ka
 
 --
 ```{r}
-data <- read_rds('data/series_data.rds')
+data <- read_csv('data/df_sube.csv') %>% 
+  rename(date=fecha, value=n)
 ```
 --
 ```{r, echo=FALSE}
@@ -192,12 +193,12 @@ data %>% head(5) %>% kableExtra::kable(format = "html")
 ### Evolución de las series 📈
 
 ```{r, fig.width=10, fig.height=5, message=FALSE, eval=FALSE}
-data %>% group_by(dept_id) %>%
+data %>% group_by(linea) %>%
   plot_time_series(date, value) 
 ```
 
 ```{r, fig.width=10, fig.height=6, message=FALSE, echo=FALSE}
-data %>% group_by(dept_id) %>%
+data %>% group_by(linea) %>%
   plot_time_series(date, value, .interactive=FALSE,
     .facet_ncol = 2, .facet_scales = 'free_y') 
 ```
@@ -217,14 +218,14 @@ class: chapter-slide
 * Se selecciona el departamento **FOODS_3** 
 
 ```{r, fig.height=3, fig.width=10}
-data_foods3 <- data %>% 
-  filter(dept_id=='FOODS_3') %>% 
-  select(-dept_id) %>% ungroup()
+data_ffcc_roca <- data %>% 
+  filter(linea=='FFCC ROCA') %>% 
+  select(-linea) %>% ungroup()
 ```
 
 
 ```{r}
-data_foods3 %>% head(5) %>% kableExtra::kable(format = "html")
+data_ffcc_roca %>% head(5) %>% kableExtra::kable(format = "html")
 ```
 
 
@@ -238,7 +239,7 @@ data_foods3 %>% head(5) %>% kableExtra::kable(format = "html")
 * Se particiona el dataset en train y test ✂️
 
 ```{r, fig.height=3, fig.width=10}
-splits <- data_foods3 %>%  
+splits <- data_ffcc_roca %>%  
   initial_time_split(prop = 0.7)
 ```
 
@@ -328,8 +329,8 @@ modelos <- modeltime_table(m_autoarima,
 ```
 
 ```{r, echo=FALSE}
-#saveRDS(modelos, 'modelos/modelos_food3.rds')
-modelos <- readRDS('modelos/modelos_food3.rds')
+#saveRDS(modelos, 'modelos/modelos_ffcc_roca.rds')
+modelos <- readRDS('modelos/modelos_ffcc_roca.rds')
 ```
 
 
@@ -373,7 +374,7 @@ calibration_table %>% modeltime_accuracy() %>%
 forecast_series <- calibration_table %>% 
   modeltime_forecast(
     new_data    = testing(splits),
-    actual_data = data_foods3)
+    actual_data = data_ffcc_roca)
 ```
 
 
@@ -395,14 +396,14 @@ forecast_series %>%
 ```{r, eval=FALSE}
 refit_tbl <- calibration_table %>%
   filter(.model_id %in% c(3)) %>% 
-  modeltime_refit(data = data_foods3)
+  modeltime_refit(data = data_ffcc_roca)
 ```
 
 
 ```{r, eval=FALSE}
 forecast_final <- refit_tbl %>% 
   modeltime_forecast(
-    actual_data = data_foods3 %>% as.data.frame(),
+    actual_data = data_ffcc_roca %>% as.data.frame(),
     h='6 months'
   )
 ```
@@ -432,12 +433,12 @@ class: chapter-slide
 ### Selección de datos
 
 ```{r}
-nest_data <- data %>% ungroup() %>% nest(nested_column = -dept_id)
+nest_data <- data %>% ungroup() %>% nest(nested_column = -linea)
 ```
 
 ```{r, echo=FALSE, out.height='10%'}
 reactable::reactable(nest_data, details = function(index) {
-  data <- data[data$dept_id == nest_data$dept_id[index], c('date','value')] %>% 
+  data <- data[data$linea == nest_data$linea[index], c('date','value')] %>% 
     mutate(value = round(value, 2))
   htmltools::div(style = "padding: 10px", reactable::reactable(data, outlined = TRUE))
 }, defaultPageSize=4) 
@@ -451,7 +452,7 @@ reactable::reactable(nest_data, details = function(index) {
 ### Modeltime Table Multifit
 
 ```{r}
-receta <- recipe(value ~ date, data = data %>% select(-dept_id )) %>%
+receta <- recipe(value ~ date, data = data %>% select(-linea )) %>%
   
   step_timeseries_signature(date) %>% 
   
@@ -496,11 +497,6 @@ m_prophet_boost <- workflow() %>% add_recipe(receta) %>%
 
 ### Modeltime Table Multifit
 
-```{r ,echo=FALSE}
-#saveRDS(model_table, 'sknifedatar/modelos/model_table.rds')
-model_table <- readRDS(here::here("modelos","model_table.rds"))
-```
-
 ```{r ,eval=FALSE}
 model_table <- modeltime_multifit(serie = nest_data,
                                   .prop = 0.9,
@@ -510,6 +506,10 @@ model_table <- modeltime_multifit(serie = nest_data,
                                   ) 
 ```
 
+```{r ,echo=FALSE}
+# saveRDS(model_table, 'modelos/model_table.rds')
+model_table <- readRDS(here::here("modelos","model_table.rds"))
+```
 
 ---
 
@@ -542,17 +542,17 @@ forecast_series <- modeltime_multiforecast(
 
 ```{r, fig.height=6, fig.width=10, eval=FALSE}
 forecast_series %>% 
-  select(state, nested_forecast) %>% 
+  select(linea, nested_forecast) %>% 
   unnest(nested_forecast) %>% 
-  group_by(state) %>% 
+  group_by(linea) %>% 
   plot_modeltime_forecast() 
 ```
 
 ```{r, fig.height=6, fig.width=10, echo=FALSE, eval=FALSE}
 forecast_series %>% 
-  select(dept_id, nested_forecast) %>% 
+  select(linea, nested_forecast) %>% 
   unnest(nested_forecast) %>% 
-  group_by(dept_id) %>% 
+  group_by(linea) %>% 
   plot_modeltime_forecast(
     .legend_max_width = 12,
     .facet_ncol = 2, 
@@ -580,17 +580,17 @@ best_models <- modeltime_multibestmodel(
 
 ```{r, eval=FALSE}
 best_models %>% 
-  select(state, nested_forecast) %>% 
+  select(linea, nested_forecast) %>% 
   unnest(nested_forecast) %>% 
-  group_by(state) %>% 
+  group_by(linea) %>% 
   plot_modeltime_forecast() 
 ```
 
 ```{r, echo=FALSE, fig.width=10, fig.height=6, eval=FALSE}
 best_models %>% 
-  select(dept_id, nested_forecast) %>% 
+  select(linea, nested_forecast) %>% 
   unnest(nested_forecast) %>% 
-  group_by(dept_id) %>% 
+  group_by(linea) %>% 
   plot_modeltime_forecast(
     .interactive = FALSE,
     .facet_scales = 'free_y', 
@@ -611,23 +611,23 @@ models_refit <- modeltime_multirefit(best_models)
 
 ```{r, eval=FALSE}
 forecast_final <- models_refit %>% 
-  modeltime_multiforecast(.h = "2 years")
+  modeltime_multiforecast(.h = "3 months")
 ```
 
 
 ```{r, fig.height=6, fig.width=10, echo=TRUE, eval=FALSE}
 forecast_final %>% 
-  select(dept_id, nested_forecast) %>% 
+  select(linea, nested_forecast) %>% 
   unnest(nested_forecast) %>% 
-  group_by(dept_id) %>% 
+  group_by(linea) %>% 
   plot_modeltime_forecast() 
 ```
 
 ```{r, fig.height=6, fig.width=10, echo=FALSE, eval=FALSE}
 forecast_final %>% 
-  select(dept_id, nested_forecast) %>% 
+  select(linea, nested_forecast) %>% 
   unnest(nested_forecast) %>% 
-  group_by(dept_id) %>% 
+  group_by(linea) %>% 
   plot_modeltime_forecast(
     .legend_max_width = 12,
     .facet_ncol = 2, 
@@ -698,8 +698,7 @@ tbats <-seasonal_reg() %>%
 wfsets <- workflow_set(
   preproc = list(
     base                  = recipe_base,
-    extrafeatures         = recipe_date_extrafeatures,
-    extrafeatures_lag     = recipe_date_extrafeatures_lag
+    extrafeatures         = recipe_date_extrafeatures
   ),
   models  = list(
     M_arima_boost       = auto_arima_boost,
@@ -748,38 +747,43 @@ wfs_multifit$table_time %>%
 Se utiliza la función **modeltime_wfs_heatmap()** de **{sknifedatar}** 📦 para visualizar la performance de cada workflow. 
 
 .panelset[
-.panel[.panel-name[FOODS_2]
+.panel[.panel-name[BSAS_LINEA_203]
 
 ```{r, message=FALSE, echo=FALSE, fig.width=10, fig.height=5, eval=FALSE}
-plots <- wfs_multifit$models_accuracy %>% 
-  select(-.model_id) %>%  
-  rename(.model_id=.model_names) %>% mutate(.fit_model = '') %>% 
-  group_by(name_serie) %>% 
-  nest() %>% 
-  mutate(plot = map(data, ~ modeltime_wfs_heatmap(., metric = 'mae',
-                                                 low_color = '#ece2f0',
-                                                 high_color = '#1f356e'
-                                                 ))) %>% 
+plots <- wfs_multifit$models_accuracy %>%
+  select(-.model_id) %>%
+  rename(.model_id = .model_names) %>% mutate(.fit_model = '') %>%
+  group_by(name_serie) %>%
+  nest() %>%
+  mutate(plot = map(
+    data,
+    ~ modeltime_wfs_heatmap(
+      .,
+      metric = 'mae',
+      low_color = '#ece2f0',
+      high_color = '#1f356e'
+    )
+  )) %>%
   ungroup()
 plots$plot[[1]]
 ```
 ]
 
-.panel[.panel-name[FOODS_3]
+.panel[.panel-name[BSAS_LINEA_501G]
 
 ```{r, echo=FALSE, fig.width=10, fig.height=5, eval=FALSE}
 plots$plot[[2]]
 ```
 ]
 
-.panel[.panel-name[HOBBIES_2]
+.panel[.panel-name[FFCC ROCA]
 
 ```{r, echo=FALSE, fig.width=10, fig.height=5, eval=FALSE}
 plots$plot[[3]]
 ```
 ]
 
-.panel[.panel-name[HOUSEHOLD_1]
+.panel[.panel-name[FFCC SAR]
 
 ```{r, echo=FALSE, fig.width=10, fig.height=5, eval=FALSE}
 plots$plot[[4]]
@@ -801,9 +805,9 @@ wfs_multiforecast <- modeltime_wfs_multiforecast(
 
 ```{r, echo=FALSE, fig.height=6, fig.width=14, fig.align='center', eval=FALSE}
 wfs_multiforecast %>% 
-  select(dept_id, nested_forecast) %>% 
+  select(linea, nested_forecast) %>% 
   unnest(nested_forecast) %>% 
-  group_by(dept_id) %>% 
+  group_by(linea) %>% 
   plot_modeltime_forecast(
     .legend_max_width = 40,
     .facet_ncol = 2, 
@@ -853,9 +857,9 @@ wfs_forecast <- modeltime_wfs_multiforecast(wfs_refit,
 
 ```{r, echo=FALSE, fig.width=10, fig.height=6, eval=FALSE}
 wfs_forecast %>% 
-  select(dept_id, nested_forecast) %>% 
+  select(linea, nested_forecast) %>% 
   unnest(nested_forecast) %>% 
-  group_by(dept_id) %>% 
+  group_by(linea) %>% 
   plot_modeltime_forecast(
     .facet_ncol = 2, 
     .line_size = 0.5,
