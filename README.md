@@ -13,3 +13,6 @@ Repositorio del tutorial del paquete {sknifedatar} presentado en la Conferencia 
 
 Los datos utilizados para el ejemplo corresponden a la [cantidad de transacciones realizadas con tarjeta SUBE](https://datos.gob.ar/dataset/transporte-sube---cantidad-transacciones-usos-por-fecha). La tarjeta SUBE es utilizada como medio de pago en transporte público en Argentina. 
 
+## Link de la presentación: 
+
+[LatinR 2022 - Sknifedatar](https://rafzamb.github.io/latin_r_2022_sknifedatar/slides.html)
